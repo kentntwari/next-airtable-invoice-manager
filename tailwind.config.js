@@ -25,6 +25,10 @@ module.exports = {
       normal: 0,
     },
     extend: {
+      spacing: {
+        18: '4.5rem',
+        25: '6.5rem',
+      },
       colors: {
         violet: {
           light: '#9277ff',
@@ -32,7 +36,7 @@ module.exports = {
         },
         blue: {
           lightest: '#dfe3fa',
-          lighter: '#888ebo',
+          lighter: '#888eb0',
           light: '#7e88c3',
           strong: '#252945',
           dark: '#141625',
