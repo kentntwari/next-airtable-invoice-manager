@@ -4,7 +4,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <NavBar />
-      <main>{children}</main>
+      <main className="px-6 flex flex-col gap-8">{children}</main>
     </>
   );
 };
