@@ -1,6 +1,11 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+    './modules/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     fontSize: {
       sm: '0.688rem',
@@ -26,6 +31,7 @@ module.exports = {
     },
     extend: {
       spacing: {
+        7.5: '1.875rem',
         18: '4.5rem',
         25: '6.5rem',
       },

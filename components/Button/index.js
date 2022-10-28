@@ -1,12 +1,18 @@
-export const Default = ({ type = 'button', addBtnClass, text = 'Add text' }) => (
+export const Default = ({
+  type = 'button',
+  addBtnClass,
+  children = 'Add text',
+  onClickEvent,
+}) => (
   <button
     type={type}
     className={
       addBtnClass
         ? addBtnClass
         : 'px-6 py-4 bg-violet-normal hover:bg-violet-light body--1 flex justify-center items-center gap-4 text-white-full rounded-3xl'
-    }>
-    {text}
+    }
+    onClick={onClickEvent}>
+    {children}
   </button>
 );
 
@@ -15,7 +21,8 @@ export const Add = ({
   state,
   addBtnClass,
   addIconClass,
-  text = 'Add something',
+  children = 'Add something',
+  onClickEvent,
 }) => {
   if (state === 'simple')
     return (
@@ -25,8 +32,9 @@ export const Add = ({
           addBtnClass
             ? addBtnClass
             : 'w-full p-4 bg-white-light hover:bg-blue-lightest body--1 flex justify-center items-center gap-4 font-bold text-blue-light rounded-3xl'
-        }>
-        {text}
+        }
+        onClick={onClickEvent}>
+        {children}
       </button>
     );
 
@@ -37,7 +45,8 @@ export const Add = ({
         addBtnClass
           ? addBtnClass
           : 'w-fit px-2.5 py-2 bg-violet-normal hover:bg-violet-light body--1 flex justify-center items-center gap-2 text-white-full rounded-3xl'
-      }>
+      }
+      onClick={onClickEvent}>
       <div
         className={
           addIconClass
@@ -52,31 +61,43 @@ export const Add = ({
           />
         </svg>
       </div>
-      {text}
+      {children}
     </button>
   );
 };
 
-export const Edit = ({ type = 'button', text = 'Edit', addBtnClass }) => (
+export const Edit = ({
+  type = 'button',
+  children = 'Edit',
+  addBtnClass,
+  onClickEvent,
+}) => (
   <button
     type={type}
     className={
       addBtnClass
         ? addBtnClass
-        : 'w-fit px-6 py-4 bg-white-light hover:bg-blue-lightest body--1 flex justify-center items-center gap-4 text-blue-light rounded-3xl'
-    }>
-    {text}
+        : 'w-fit px-6 py-4 bg-white-light hover:bg-blue-lightest font-bold body--1 flex justify-center items-center gap-4 text-blue-light rounded-3xl'
+    }
+    onClick={onClickEvent}>
+    {children}
   </button>
 );
 
-export const Delete = ({ type = 'button', text = 'Delete', addBtnClass }) => (
+export const Delete = ({
+  type = 'button',
+  children = 'Delete',
+  addBtnClass,
+  onClickEvent,
+}) => (
   <button
     type={type}
     className={
       addBtnClass
         ? addBtnClass
         : 'w-fit px-6 py-4 bg-red-light hover:bg-red-lighter body--1 flex justify-center items-center gap-4 text-white-full rounded-3xl'
-    }>
-    {text}
+    }
+    onClick={onClickEvent}>
+    {children}
   </button>
 );
