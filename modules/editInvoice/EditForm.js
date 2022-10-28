@@ -2,7 +2,11 @@ import { useContext } from 'react';
 
 import InvoiceContext from '../../context/InvoiceContext';
 
-import Input from './Input';
+import ItemList from './ItemList';
+import SenderDetails from './SenderDetails';
+import ClientDetails from './ClientDetails';
+import InvoiceDetails from './InvoiceDetails';
+import * as Button from '../../components/Button';
 
 const EditForm = () => {
   const { client } = useContext(InvoiceContext);
@@ -19,35 +23,19 @@ const EditForm = () => {
       <form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-10">
         <div className="flex flex-col gap-6">
           <span className="font-bold body--1 text-violet-normal">Bill From</span>
-          <Input id="sender_street" labelled="Street Address" />
-
-          <div className="flex justify-between items-center gap-6">
-            <Input id="sender_city" labelled="City" />
-            <Input id="sender_post_code" labelled="Post Code" />
-          </div>
-
-          <Input id="sender_country" labelled="Country" />
+          <SenderDetails />
         </div>
 
         <div className="flex flex-col gap-6">
           <span className="font-bold body--1 text-violet-normal">Bill To</span>
-          <Input id="client_name" labelled="Client's Name" />
-          <Input type="email" id="client_email" labelled="Client's Email" />
-          <Input id="client_street" labelled="Street Address" />
-          <div className="flex justify-between items-center gap-6">
-            <Input id="client_city" labelled="City" />
-            <Input id="client_post_code" labelled="Post Code" />
-          </div>
-          <Input id="client_country" labelled="Country" />
+          <ClientDetails />
         </div>
+        <InvoiceDetails />
+        <ItemList />
 
-        <div className="flex flex-col gap-6">
-          <span className="opacity-50">
-            <Input id="invoice_date" labelled="Invoice Date" readOnly={true} />
-          </span>
-
-          <Input id="payment_terms" labelled="Payment Terms" />
-          <Input id="project_description" labelled="Project Description" />
+        <div className="px-6 py-5 flex justify-end items-center gap-2">
+          <Button.Edit>Cancel</Button.Edit>
+          <Button.Default>Save Changes</Button.Default>
         </div>
       </form>
     </div>
