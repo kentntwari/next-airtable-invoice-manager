@@ -1,4 +1,6 @@
-import Status from './Status';
+import * as Status from './Status';
+
+import { formatDate } from '../../lib/formatDate';
 
 const InvoiceCardSummary = (props) => {
   const {
@@ -11,13 +13,6 @@ const InvoiceCardSummary = (props) => {
   } = props;
 
   const total = array_total.reduce((prev, current) => prev + current, 0);
-
-  const event = new Date(due_date);
-  const formatted_date = {
-    day: event.toLocaleDateString('en-ca', { day: 'numeric' }),
-    month: event.toLocaleDateString('en-ca', { month: 'long' }),
-    year: event.toLocaleDateString('en-ca', { year: 'numeric' }),
-  };
 
   return (
     <div className="bg-white-full w-full p-6 flex flex-col gap-6 shadow-md">
@@ -34,15 +29,12 @@ const InvoiceCardSummary = (props) => {
 
       <div className="w-full flex justify-between items-center">
         <div className="flex flex-col gap-2">
-          <small className="body--1 text-blue-lighter">
-            Due {formatted_date.day} {formatted_date.month.slice(0, 3)}{' '}
-            {formatted_date.year}
-          </small>
+          <small className="body--1 text-blue-lighter">Due {formatDate(due_date)}</small>
 
-          <span className="font-bold text-black-shade">£ {total}</span>
+          <span className="font-bold text-black-shade">£ {total.toFixed(2)}</span>
         </div>
 
-        <Status {...status} />
+        <Status.Flag payload={status} />
       </div>
     </div>
   );
