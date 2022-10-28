@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 
-import InvoiceCardSummary from '../modules/Invoice/InvoiceCardSummary';
+import InvoiceCardSummary from '../modules/invoice/InvoiceCardSummary';
 import * as Button from '../components/Button';
 
 import { getClientsTable } from '../lib/airtable';
