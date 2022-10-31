@@ -11,9 +11,9 @@ const InvoiceDetails = () => {
 
   const { invoice_created_date, invoice_payment_terms } = client;
 
-  const description = [
-    ...new Set(products.map(({ description }) => description[0])),
-  ].join(', ');
+  const description = [...new Set(products.map((res) => res.fields.description[0]))].join(
+    ', '
+  );
 
   return (
     <div className="flex flex-col gap-6">
