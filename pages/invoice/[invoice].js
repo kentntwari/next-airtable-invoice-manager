@@ -10,23 +10,22 @@ const Invoice = ({ client, products }) => {
   const shippingLocation = useCallback(() => {
     return [
       ...new Set(
-        products.map(
-          ({
-            shipped_from_street,
-            shipped_from_city,
-            shipped_from_post_code,
-            shipped_from_country,
-          }) =>
-            JSON.stringify({
-              shipped_from_street,
-              shipped_from_city,
-              shipped_from_post_code,
-              shipped_from_country,
-            })
+        products.map(({ fields }) =>
+          JSON.stringify({
+            street: fields.shipped_from_street,
+            city: fields.shipped_from_city,
+            post_code: fields.shipped_from_post_code,
+            country: fields.shipped_from_country,
+          })
         )
       ),
     ].map((res) => JSON.parse(res));
   }, [products]);
+
+  const data = {
+    client: client[0],
+    shippedFrom: shippingLocation(),
+  };
 
   return (
     <>
@@ -64,15 +63,18 @@ export const getServerSideProps = async (ctx) => {
   const clientRecords = await getClientsTable();
   const productRecords = await getProductsTable();
 
-  function renderArr(data) {
-    return JSON.parse(JSON.stringify(data))
-      .map((record) => record.fields)
-      .filter(({ invoiced }) => invoiced[0] === ctx.query.invoice);
-  }
+  const filteredClientRecords = JSON.parse(JSON.stringify(clientRecords))
+    .map((record) => record.fields)
+    .filter(({ invoiced }) => invoiced[0] === ctx.query.invoice);
 
-  const filteredClientRecords = renderArr(clientRecords);
-
-  const filteredProductRecords = renderArr(productRecords);
+  const filteredProductRecords = JSON.parse(JSON.stringify(productRecords))
+    .map((record) => {
+      return {
+        id: record.id,
+        fields: record.fields,
+      };
+    })
+    .filter((res) => res.fields.invoiced[0] === ctx.query.invoice);
 
   return {
     props: {
