@@ -6,7 +6,9 @@ import InvoiceContext from '../../context/InvoiceContext';
 const PurchaseSummary = () => {
   const { products } = useContext(InvoiceContext);
 
-  const purchases = products.map(({ product_name, price, quantity }) => {
+  const purchases = products.map((res) => {
+    const { product_name, price, quantity } = res.fields;
+
     return {
       product: product_name,
       price,

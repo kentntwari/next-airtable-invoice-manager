@@ -14,7 +14,7 @@ const Description = () => {
         <span className="font-bold body--1 text-blue-lighter">#</span>
         {invoice_id}
       </p>
-      {[...new Set(products.map((x) => x.description[0]))].map((res) => (
+      {[...new Set(products.map((res) => res.fields.description[0]))].map((res) => (
         <small key={uuidv4()} className="body--1 text-blue-lighter">
           {res}
         </small>

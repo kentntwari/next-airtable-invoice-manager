@@ -9,19 +9,13 @@ const SenderAddress = () => {
   const address = useCallback(() => {
     return [
       ...new Set(
-        products.map(
-          ({
-            shipped_from_street,
-            shipped_from_city,
-            shipped_from_post_code,
-            shipped_from_country,
-          }) =>
-            JSON.stringify({
-              shipped_from_street,
-              shipped_from_city,
-              shipped_from_post_code,
-              shipped_from_country,
-            })
+        products.map(({ fields }) =>
+          JSON.stringify({
+            street: fields.shipped_from_street,
+            city: fields.shipped_from_city,
+            post_code: fields.shipped_from_post_code,
+            country: fields.shipped_from_country,
+          })
         )
       ),
     ].map((res) => JSON.parse(res));
@@ -29,21 +23,14 @@ const SenderAddress = () => {
 
   return (
     <>
-      {address().map(
-        ({
-          shipped_from_street: street,
-          shipped_from_city: city,
-          shipped_from_post_code: post_code,
-          shipped_from_country: country,
-        }) => (
-          <span key={uuidv4()} className="body--2 text-blue-lighter">
-            {street} <br />
-            {city} <br />
-            {post_code} <br />
-            {country}
-          </span>
-        )
-      )}
+      {address().map(({ street, city, post_code, country }) => (
+        <span key={uuidv4()} className="body--2 text-blue-lighter">
+          {street} <br />
+          {city} <br />
+          {post_code} <br />
+          {country}
+        </span>
+      ))}
     </>
   );
 };
