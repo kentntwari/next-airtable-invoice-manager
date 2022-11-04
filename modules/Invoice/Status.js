@@ -1,38 +1,30 @@
-import { useContext } from 'react';
-
-import InvoiceContext from '../../context/InvoiceContext';
-
-export const Flag = ({ payload }) => {
-  const status = Object.values(payload);
-
+export const Flag = ({ payload: status }) => {
   function generateStatusCardColor() {
-    if (status[0].toLowerCase() == 'paid')
+    if (status.toLowerCase() == 'paid')
       return { backgroundColor: 'rgba(51,214,159,0.1)', borderRadius: '6px' };
 
-    if (status[0].toLowerCase() == 'pending')
+    if (status.toLowerCase() == 'pending')
       return { backgroundColor: 'rgba(255,143,0,0.1)', borderRadius: '6px' };
 
-    if (status[0].toLowerCase() == 'draft')
+    if (status.toLowerCase() == 'draft')
       return { backgroundColor: 'rgba(55,59,83,0.1)', borderRadius: '6px' };
   }
 
   function generateStatusDotColor() {
-    if (status[0].toLowerCase() == 'paid')
-      return { backgroundColor: 'rgba(51,214,159,1)' };
+    if (status.toLowerCase() == 'paid') return { backgroundColor: 'rgba(51,214,159,1)' };
 
-    if (status[0].toLowerCase() == 'pending')
+    if (status.toLowerCase() == 'pending')
       return { backgroundColor: 'rgba(255,143,0,1)' };
 
-    if (status[0].toLowerCase() == 'draft')
-      return { backgroundColor: 'rgba(55,59,83,1)' };
+    if (status.toLowerCase() == 'draft') return { backgroundColor: 'rgba(55,59,83,1)' };
   }
 
   function generateStatusTextColor() {
-    if (status[0].toLowerCase() == 'paid') return { color: 'rgba(51,214,159,1)' };
+    if (status.toLowerCase() == 'paid') return { color: 'rgba(51,214,159,1)' };
 
-    if (status[0].toLowerCase() == 'pending') return { color: 'rgba(255,143,0,1)' };
+    if (status.toLowerCase() == 'pending') return { color: 'rgba(255,143,0,1)' };
 
-    if (status[0].toLowerCase() == 'draft') return { color: 'rgba(55,59,83,1)' };
+    if (status.toLowerCase() == 'draft') return { color: 'rgba(55,59,83,1)' };
   }
 
   return (
@@ -49,16 +41,12 @@ export const Flag = ({ payload }) => {
   );
 };
 
-export const Card = () => {
-  const { client } = useContext(InvoiceContext);
-
-  const { invoice_status } = client;
-
+export const Card = (props) => {
   return (
     <div className="w-full p-6 bg-white-full flex justify-between items-center rounded-lg">
       <div className="w-full flex justify-between items-center">
         <span className="body--1 text-blue-lighter">Status</span>
-        <Flag payload={invoice_status} />
+        <Flag payload={props[0]} />
       </div>
     </div>
   );

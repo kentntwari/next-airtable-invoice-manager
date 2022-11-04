@@ -34,7 +34,7 @@ const InvoiceCardSummary = (props) => {
           <span className="font-bold text-black-shade">£ {total.toFixed(2)}</span>
         </div>
 
-        <Status.Flag payload={status} />
+        <Status.Flag payload={status[0]} />
       </div>
     </div>
   );

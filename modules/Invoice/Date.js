@@ -1,13 +1,7 @@
-import { useContext } from 'react';
-
-import InvoiceContext from '../../context/InvoiceContext';
-
 import { formatDate } from '../../lib/formatDate';
 
-const Date = () => {
-  const { client } = useContext(InvoiceContext);
-
-  const { invoice_created_date: created_at, invoice_due_date: due_date } = client;
+const Date = (props) => {
+  const { created_at, due_date } = props;
 
   return (
     <div className="flex flex-col gap-8">
