@@ -1,29 +1,28 @@
-import { createRef, useContext } from 'react';
+import { createRef, useContext, useRef } from 'react';
 
-import ItemListContext from '../../context/ItemListContext';
+import FormContext from '../../context/FormContext';
 
 import Input from './Input';
 
-const Item = ({ record_id, data }) => {
-  const { price, quantity, product_name } = data;
+const Item = ({ id, data }) => {
+  const { items, state, dispatch } = useContext(FormContext);
 
-  const {
-    list,
-    triggerItemDispatch: dispatch,
-    itemState: state,
-  } = useContext(ItemListContext);
+  const { price, product: product_name, quantity } = data;
 
-  const product_ref = createRef(product_name);
+  const product_name_ref = createRef(product_name);
+  const quantity_ref = createRef(quantity);
+  const price_ref = createRef(price);
+  const total_ref = useRef();
 
   function deleteItem() {
     return dispatch({
       type: 'REMOVE_ITEM',
       payload: {
-        updateList: list.filter((res) => {
-          const product = res.fields.product_name;
-          if (product !== product_ref.current.value) return product;
+        updateItems: items.load.filter((res) => {
+          const product = res.product;
+          if (product !== product_name_ref.current.value) return product;
         }),
-        deleted: state.deleteItems.push(record_id),
+        deletedItems: state.items.delete.push(id),
       },
     });
   }
@@ -32,19 +31,27 @@ const Item = ({ record_id, data }) => {
     <>
       <div className="w-full grid grid-cols-2 items-center gap-y-6 gap-x-4">
         <Input
-          ref={product_ref}
+          ref={product_name_ref}
+          id={id}
+          name="product"
           addComponentClass="col-start-1 col-end-3"
           labelled="Item Name"
           defaultValue={product_name}
         />
         <div className="flex items-center gap-4">
           <Input
+            ref={quantity_ref}
+            id={id}
+            name="quantity"
             type="number"
             addComponentClass="w-1/3"
             labelled="Qty."
             defaultValue={quantity}
           />
           <Input
+            ref={price_ref}
+            id={id}
+            name="price"
             type="number"
             addComponentClass="w-2/3"
             labelled="Price"
@@ -54,6 +61,8 @@ const Item = ({ record_id, data }) => {
 
         <div className="flex justify-between items-center">
           <Input
+            ref={total_ref}
+            id={id}
             addComponentClass="w-25"
             addInputClass="border-none text-blue-light"
             labelled="Total"
