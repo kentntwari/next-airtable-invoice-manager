@@ -143,14 +143,6 @@ export const getServerSideProps = async (ctx) => {
     })
     .filter((res) => res.fields.invoiced[0] === ctx.query.invoice);
 
-  // const shippedFromDetails = filteredProductRecords.map((res) => {
-  //   return {
-  //     street: res.fields.shipped_from_street,
-  //   };
-  // });
-
-  // console.log(shippedFromDetails);
-
   return {
     props: {
       client: filteredClientRecords,
