@@ -1,12 +1,11 @@
-import { createRef, useContext, useRef } from 'react';
+import { createRef, useRef, useContext } from 'react';
 
 import FormContext from '../../context/FormContext';
 
 import Input from './Input';
 
 const Item = ({ id, data }) => {
-  const { items, state, dispatch } = useContext(FormContext);
-
+  const { state, dispatch } = useContext(FormContext);
   const { price, product: product_name, quantity } = data;
 
   const product_name_ref = createRef(product_name);
@@ -14,15 +13,34 @@ const Item = ({ id, data }) => {
   const price_ref = createRef(price);
   const total_ref = useRef();
 
+  function updateProduct(e) {
+    switch (e.target.name) {
+      case 'product':
+        dispatch({
+          type: 'UPDATE_ITEMS',
+          payload: {
+            ...state.items,
+            load: state.items.load.map((res) => {
+              if (e.target.attributes.getNamedItem('record_id').value === res.record_id) {
+                return { ...res, product: e.target.value };
+              }
+              return res;
+            }),
+          },
+        });
+
+        break;
+    }
+  }
+
   function deleteItem() {
     return dispatch({
       type: 'REMOVE_ITEM',
       payload: {
-        updateItems: items.load.filter((res) => {
+        updateItems: state.items.load.filter((res) => {
           const product = res.product;
           if (product !== product_name_ref.current.value) return product;
         }),
-        deletedItems: state.items.delete.push(id),
       },
     });
   }
@@ -37,7 +55,9 @@ const Item = ({ id, data }) => {
           addComponentClass="col-start-1 col-end-3"
           labelled="Item Name"
           defaultValue={product_name}
+          callBack={(e) => updateProduct(e)}
         />
+
         <div className="flex items-center gap-4">
           <Input
             ref={quantity_ref}
@@ -47,6 +67,7 @@ const Item = ({ id, data }) => {
             addComponentClass="w-1/3"
             labelled="Qty."
             defaultValue={quantity}
+            callBack={(e) => updateProduct(e)}
           />
           <Input
             ref={price_ref}
@@ -56,9 +77,9 @@ const Item = ({ id, data }) => {
             addComponentClass="w-2/3"
             labelled="Price"
             defaultValue={price}
+            callBack={(e) => updateProduct(e)}
           />
         </div>
-
         <div className="flex justify-between items-center">
           <Input
             ref={total_ref}

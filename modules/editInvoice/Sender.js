@@ -5,9 +5,57 @@ import FormContext from '../../context/FormContext';
 import Input from './Input';
 
 const Sender = () => {
-  const { sender } = useContext(FormContext);
+  const { sender, state, dispatch } = useContext(FormContext);
 
   const { street, city, post_code, country } = sender;
+
+  function updateState(e) {
+    switch (e.target.name) {
+      case 'sender_street':
+        dispatch({
+          type: 'UPDATE_SENDER_INFO',
+          payload: {
+            ...state.shippedFrom,
+            street: e.target.value,
+          },
+        });
+
+        break;
+
+      case 'sender_city':
+        dispatch({
+          type: 'UPDATE_SENDER_INFO',
+          payload: {
+            ...state.shippedFrom,
+            city: e.target.value,
+          },
+        });
+
+        break;
+
+      case 'sender_post_code':
+        dispatch({
+          type: 'UPDATE_SENDER_INFO',
+          payload: {
+            ...state.shippedFrom,
+            post_code: e.target.value,
+          },
+        });
+
+        break;
+
+      case 'sender_country':
+        dispatch({
+          type: 'UPDATE_SENDER_INFO',
+          payload: {
+            ...state.shippedFrom,
+            country: e.target.value,
+          },
+        });
+
+        break;
+    }
+  }
 
   return (
     <Fragment>
@@ -16,6 +64,7 @@ const Sender = () => {
         name="sender_street"
         labelled="Street Address"
         defaultValue={street}
+        callBack={(e) => updateState(e)}
       />
 
       <div className="flex justify-between items-center gap-6">
@@ -25,6 +74,7 @@ const Sender = () => {
           name="sender_post_code"
           labelled="Post Code"
           defaultValue={post_code}
+          callBack={(e) => updateState(e)}
         />
       </div>
 
@@ -33,6 +83,7 @@ const Sender = () => {
         name="sender_country"
         labelled="Country"
         defaultValue={country}
+        callBack={(e) => updateState(e)}
       />
     </Fragment>
   );
