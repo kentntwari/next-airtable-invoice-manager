@@ -33,6 +33,12 @@ export function reducer(state, action) {
         },
       };
 
+    case 'ADD_ITEM':
+      return {
+        ...state,
+        items: action.payload,
+      };
+
     case 'EMPTY_ITEM_LIST':
       return {
         ...state,
