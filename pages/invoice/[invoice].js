@@ -26,7 +26,7 @@ const Invoice = ({ client, products }) => {
     lives_at_city,
     lives_at_post_code,
     lives_at_country,
-  } = client[0];
+  } = client[0].fields;
 
   const description = [
     ...new Set(products.map(({ fields }) => fields.description).flat()),
@@ -131,8 +131,13 @@ export const getServerSideProps = async (ctx) => {
   const productRecords = await getProductsTable();
 
   const filteredClientRecords = JSON.parse(JSON.stringify(clientRecords))
-    .map((record) => record.fields)
-    .filter(({ invoiced }) => invoiced[0] === ctx.query.invoice);
+    .map((record) => {
+      return {
+        clientID: record.id,
+        fields: record.fields,
+      };
+    })
+    .filter((res) => res.fields.invoiced[0] === ctx.query.invoice);
 
   const filteredProductRecords = JSON.parse(JSON.stringify(productRecords))
     .map((record) => {
